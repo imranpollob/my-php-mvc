@@ -76,7 +76,7 @@ class Router
     private function execute($arg, $params = [])
     {
         if (is_callable($arg)) {
-            $arg->__invoke();
+            call_user_func_array($arg, $params);
         } else if (is_array($arg)) {
             list($controller, $method) = explode('@', $arg['controller']);
 

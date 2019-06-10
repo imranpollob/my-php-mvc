@@ -30,8 +30,8 @@ Router::get('users', [
     'controller' => 'App\Controller\UserController@index'
 ]);
 
-Router::get('users/@number/edit/@string', function () {
-    echo "its here";
+Router::get('users/@number/edit/@string', function ($a, $b) {
+    echo "$a  $b";
 });
 
 Router::get('users/@number', [
