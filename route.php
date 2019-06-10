@@ -21,3 +21,11 @@ Router::get('users/all', function (){
 Router::get('users', [
     'controller' => 'App\Controller\UserController@index'
 ]);
+
+Router::get('users/@number/edit/@string', function (){
+    echo "its here";
+});
+
+Router::get('users/@number', [
+    'controller' => 'App\Controller\UserController@show'
+]);

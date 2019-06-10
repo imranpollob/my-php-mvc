@@ -42,4 +42,16 @@ class BaseModel extends Database
         return self::execute("SELECT * FROM $tableName LIMIT 1");
     }
 
+    /**
+     * Find an id from a table
+     *
+     * @param string $tableName
+     * @param integer $id
+     * @return array
+     */
+    public static function find($tableName, $id)
+    {
+        return self::execute("SELECT * FROM $tableName WHERE id = $id");
+    }
+
 }

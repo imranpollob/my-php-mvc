@@ -4,36 +4,74 @@ namespace Core;
 
 class Router
 {
-
-    protected $routes = [];
-
-    protected $params = [];
-
+    /**
+     * Handle GET request
+     *
+     * @param string $route
+     * @param mixed $arg
+     */
     public static function get($route, $arg)
     {
-        (new Router)->add($route, $arg);
+        (new Router)->match($route, $arg);
     }
 
-
-    private function add($route, $arg)
+    /**
+     * Match route
+     *
+     * @param string $route
+     * @param mixed $arg
+     */
+    private function match($route, $arg)
     {
-        $this->routes[] = $route;
-
         if ($_GET['url'] == $route) {
-            if (is_callable($arg)) {
-                $arg->__invoke();
-            } else if (is_array($arg)) {
-                list($controller, $method) = explode('@', $arg['controller']);
+            $this->execute($arg);
+        } else {
+            $explodedUrl = explode('/', $_GET['url']);
+            $explodedRoute = explode('/', $route);
 
-                //require_once './App/Controller/' . $controller . '.php';
+            if (count($explodedUrl) == count($explodedRoute)) {
+                $flag = 1;
+                $params = [];
 
-                (new $controller)->{$method}();
+                for ($i = 0; $i < count($explodedRoute); $i++) {
+                    if (in_array($explodedRoute[$i], ['@string', '@number'])) {
+                        if ($explodedRoute[$i] == '@number' && preg_match('/^[0-9]+$/', $explodedUrl[$i])) {
+                            $params[] = $explodedUrl[$i];
+                            continue;
+                        } else if ($explodedRoute[$i] == '@string' && preg_match('/^[a-zA-Z0-9]+$/', $explodedUrl[$i])) {
+                            $params[] = $explodedUrl[$i];
+                            continue;
+                        }
+                    } else if ($explodedRoute[$i] == $explodedUrl[$i]) {
+                        continue;
+                    }
+
+                    $flag = 0;
+                    break;
+                }
+
+                if ($flag == 1) {
+                    $this->execute($arg, $params);
+                }
             }
         }
     }
 
-    public function getRoutes()
+    /**
+     * Invoke anonymous function or execute controller method
+     *
+     * @param mixed $arg
+     * @param null|array $params
+     */
+    private function execute($arg, $params = [])
     {
-        return $this->routes;
+        if (is_callable($arg)) {
+            $arg->__invoke();
+        } else if (is_array($arg)) {
+            list($controller, $method) = explode('@', $arg['controller']);
+
+            call_user_func_array([new $controller, $method], $params);
+        }
     }
+
 }

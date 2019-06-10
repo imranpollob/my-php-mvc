@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 spl_autoload_register(function ($class) {
     $file = str_replace('\\', '/', $class);
-    var_dump($file);
+//    var_dump($file);
     require_once $file . '.php';
 });
 

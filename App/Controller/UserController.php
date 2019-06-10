@@ -11,4 +11,9 @@ class UserController extends BaseController
     {
         View::render('users', ['users' => User::all('users')]);
     }
+
+    public function show($id)
+    {
+        echo json_encode(User::find('users', $id));
+    }
 }
