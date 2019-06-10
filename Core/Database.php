@@ -2,18 +2,18 @@
 
 namespace Core;
 
-use Config\database;
+use Config\database as DB;
 use PDO;
 
-class BaseModel
+class Database
 {
     public static function connect()
     {
         static $db = null;
 
         if ($db === null) {
-            $dsn = 'mysql:host=' . database::DB_HOST . ';dbname=' . database::DB_NAME . ';charset=utf8';
-            $db = new PDO($dsn, database::DB_USER, database::DB_PASSWORD);
+            $dsn = 'mysql:host=' . DB::DB_HOST . ';dbname=' . DB::DB_NAME . ';charset=utf8';
+            $db = new PDO($dsn, DB::DB_USER, DB::DB_PASSWORD);
 
             // Throw an Exception when an error occurs
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -21,5 +21,4 @@ class BaseModel
 
         return $db;
     }
-
 }
