@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Router
 {
 
@@ -23,7 +25,7 @@ class Router
             } else if (is_array($arg)) {
                 list($controller, $method) = explode('@', $arg['controller']);
 
-                require_once './App/Controller/' . $controller . '.php';
+                //require_once './App/Controller/' . $controller . '.php';
 
                 (new $controller)->{$method}();
             }

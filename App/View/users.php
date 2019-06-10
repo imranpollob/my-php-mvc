@@ -9,11 +9,10 @@
 </head>
 <body>
 <h1>All Users</h1>
-<?php
-if (!empty($users))
-    foreach ($users as $user) {
-        echo $user['name'];
-    }
-?>
+<?php if (!empty($users)): ?>
+    <?php foreach ($users as $user): ?>
+        <?= $user['name'].'<br>'; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 </body>
 </html>

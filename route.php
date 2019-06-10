@@ -1,6 +1,6 @@
 <?php
 
-require_once './Core/Router.php';
+use Core\Router;
 
 Router::get('index.php', function (){
     echo "home ";
@@ -19,5 +19,5 @@ Router::get('users/all', function (){
 });
 
 Router::get('users', [
-    'controller' => 'UserController@index'
+    'controller' => 'App\Controller\UserController@index'
 ]);

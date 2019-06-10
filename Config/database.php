@@ -1,6 +1,8 @@
 <?php
 
-class Config
+namespace Config;
+
+class database
 {
     const DB_HOST = 'localhost';
 

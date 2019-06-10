@@ -1,6 +1,9 @@
 <?php
 
-require_once './Core/BaseModel.php';
+namespace App\Model;
+
+use Core\BaseModel;
+use PDO;
 
 class User extends BaseModel
 {

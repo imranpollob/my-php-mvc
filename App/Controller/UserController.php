@@ -1,8 +1,10 @@
 <?php
 
-require_once './Core/View.php';
-require_once './Core/BaseController.php';
-require_once './App/Model/User.php';
+namespace App\Controller;
+
+use Core\BaseController;
+use App\Model\User;
+use Core\View;
 
 class UserController extends BaseController
 {
