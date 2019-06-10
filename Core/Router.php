@@ -2,17 +2,27 @@
 
 namespace Core;
 
+/**
+ * @method static get(string $string, mixed $array)
+ * @method static post(string $string, mixed $array)
+ * @method static put(string $string, mixed $array)
+ * @method static patch(string $string, mixed $array)
+ * @method static delete(string $string, mixed $array)
+ */
 class Router
 {
     /**
-     * Handle GET request
+     * Handle requests
      *
-     * @param string $route
-     * @param mixed $arg
+     * @param string $name
+     * @param array $params
      */
-    public static function get($route, $arg)
+    public static function __callStatic($name, $params)
     {
-        (new Router)->match($route, $arg);
+        if (strtolower($_SERVER['REQUEST_METHOD']) == $name) {
+            (new Router)->match($params[0], $params[1]);
+        }
+
     }
 
     /**
@@ -72,6 +82,8 @@ class Router
 
             call_user_func_array([new $controller, $method], $params);
         }
+
+        exit();
     }
 
 }
