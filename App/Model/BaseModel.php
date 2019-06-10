@@ -7,12 +7,39 @@ use PDO;
 
 class BaseModel extends Database
 {
-    public static function all($tableName)
+    /**
+     * Execute query and return result
+     *
+     * @param string $query
+     * @return array
+     */
+    protected static function execute($query)
     {
         $db = static::connect();
 
-        $stmt = $db->query("SELECT * FROM $tableName");
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Get all result from a table
+     *
+     * @param string $tableName
+     * @return array
+     */
+    public static function all($tableName)
+    {
+        return self::execute("SELECT * FROM $tableName");
+    }
+
+    /**
+     * Get the first result from a table
+     *
+     * @param string $tableName
+     * @return array
+     */
+    public static function first($tableName)
+    {
+        return self::execute("SELECT * FROM $tableName LIMIT 1");
+    }
+
 }
