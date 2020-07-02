@@ -20,4 +20,3 @@ Router::get('users/@number', [
 ```
 
 Available request methods: GET, POST, PUT, PATCH, DELETE
-
